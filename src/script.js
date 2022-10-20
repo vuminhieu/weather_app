@@ -19,10 +19,13 @@ let weather = {
   },
   displayWeather: function (data) {
     const { name } = data;
+    const { latitude } = data;
     const { icon, description } = data.weather[0];
     const { temp, humidity } = data.main;
     const { speed } = data.wind;
     document.querySelector(".city").innerText = "Weather in " + name;
+    console.log("Ten" + name);
+    console.log("Kinh do" + latitude);
     document.querySelector(".icon").src =
       "https://openweathermap.org/img/wn/" + icon + ".png";
     document.querySelector(".description").innerText = description;
