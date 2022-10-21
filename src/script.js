@@ -1,4 +1,9 @@
 /* Fetching Data from OpenWeatherMap API */
+
+let Add = "Hanoi"
+const accessKeyApiLocate = "pk.eyJ1IjoiYW5ocXQxIiwiYSI6ImNsOWI4c2F3ZjB5d2Mzdm8zaHE0OGs2ZDkifQ.EBWL6ETSXIZWwyr2E2wcyQ"
+const APILocate = `https://api.mapbox.com/geocoding/v5/mapbox.places/${Add}.json?access_token=${accessKeyApiLocate}`
+
 let weather = {
   apiKey: "aba6ff9d6de967d5eac6fd79114693cc",
   fetchWeather: function (city) {
@@ -23,25 +28,29 @@ let weather = {
     const { icon, description } = data.weather[0];
     const { temp, humidity } = data.main;
     const { speed } = data.wind;
-    document.querySelector(".city").innerText = "Weather in " + name;
-    console.log("Ten" + name);
-    console.log("Kinh do" + latitude);
+    document.querySelector(".city").innerText = "Thời tiết tại " + name;
+    // console.log("Ten" + name);
+    // console.log("Kinh do" + latitude);
     document.querySelector(".icon").src =
       "https://openweathermap.org/img/wn/" + icon + ".png";
     document.querySelector(".description").innerText = description;
     document.querySelector(".temp").innerText = temp + "°C";
+
     document.querySelector(".humidity").innerText =
-      "Humidity: " + humidity + "%";
+      " Lượng mưa : " + humidity + "%";
     document.querySelector(".wind").innerText =
-      "Wind speed: " + speed + " km/h";
+      "Tốc độ gió: " + speed + " km/h";
     document.querySelector(".weather").classList.remove("loading");
     document.body.style.backgroundImage =
       "url('https://source.unsplash.com/1600x900/?" + name + "')";
   },
   search: function () {
     this.fetchWeather(document.querySelector(".search-bar").value);
+    // console.log(value)
   },
 };
+
+
 
 /* Fetching Data from OpenCageData Geocoder */
 let geocode = {
@@ -68,7 +77,7 @@ let geocode = {
       if (request.status == 200) {
         var data = JSON.parse(request.responseText);
         weather.fetchWeather(data.results[0].components.city);
-        console.log(data.results[0].components.city)
+        // console.log(data.results[0].components.city)
       } else if (request.status <= 500) {
 
         console.log("unable to geocode! Response code: " + request.status);
@@ -83,7 +92,7 @@ let geocode = {
       console.log("unable to connect to server");
     };
 
-    request.send(); 
+    request.send();
   },
   getLocation: function() {
     function success (data) {
@@ -110,14 +119,28 @@ document
     }
   });
 
-weather.fetchWeather("Manipal");
+weather.fetchWeather("Ha Noi");
 
-document
-  .querySelector(".search-bar")
-  .addEventListener("keyup", function (event) {
-    if (event.key == "Enter") {
-      weather.search();
-    }
-  });
+
 
 geocode.getLocation();
+const test = document.getElementById("22")
+
+  const test1 = document.getElementById("44")
+  test1.addEventListener("click", () => {
+    const valueInput = test.value
+    fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${valueInput}.json?access_token=${accessKeyApiLocate}`, {
+      method: "GET",
+    }).then((res) => res.json()) .then((data) => console.log(data.features))
+  })
+
+test.addEventListener("keyup", (event) => {
+  if (event.key == "Enter") {
+    const valueInput = test.value
+    fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${valueInput}.json?access_token=${accessKeyApiLocate}`, {
+      method: "GET",
+    }).then((res) => res.json()) .then((data) => console.log(data.features))
+  }
+
+})
+
