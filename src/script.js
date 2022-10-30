@@ -38,7 +38,7 @@ let weather = {
     },
     search: function () {
         this.fetchWeather(document.querySelector(".search-bar").value);
-        // console.log(value)
+        console.log(value);
     },
 };
 
@@ -107,11 +107,11 @@ document
     });
 
 weather.fetchWeather("Ha Noi");
-
 geocode.getLocation();
-const test = document.getElementById("22")
 
+const test = document.getElementById("22")
 const test1 = document.getElementById("44")
+
 test1.addEventListener("click", () => {
     const valueInput = test.value
     fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${valueInput}.json?access_token=${accessKeyApiLocate}`, {
