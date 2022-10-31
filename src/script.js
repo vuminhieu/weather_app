@@ -113,10 +113,16 @@ const test = document.getElementById("22")
 const test1 = document.getElementById("44")
 
 test1.addEventListener("click", () => {
-    const valueInput = test.value
+    // const valueInput = test.value
     fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${valueInput}.json?access_token=${accessKeyApiLocate}`, {
         method: "GET",
-    }).then((res) => res.json()).then((data) => console.log(data.features))
+    }).then((res) => res.json())
+        .then((data) =>
+        { console.log(data.features)
+            let long = data.features.longitude
+            let lat = data.features.latitude
+        saveDataToFirebase(6,7);
+        })
 })
 
 test.addEventListener("keyup", (event) => {
@@ -125,8 +131,41 @@ test.addEventListener("keyup", (event) => {
         fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${valueInput}.json?access_token=${accessKeyApiLocate}`,
             {
                 method: "GET",
-            }).then((res) => res.json()).then((data) => console.log(data.features))
+            }).then((res) => res.json()).then((data) => { console.log(data.features)
+            let long = data.features.longitude
+            let lat = data.features.latitude
+            saveDataToFirebase(6,7);
+        })
     }
 
 })
+
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.13.0/firebase-app.js";
+import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/9.13.0/firebase-database.js";
+function saveDataToFirebase(longitude,latitude) {
+    const firebaseConfig = {
+        apiKey: "AIzaSyCsJBR0Mm23RUBqmdjEhvY8huGOU0egqAs",
+        authDomain: "iot-weather-f35d1.firebaseapp.com",
+        databaseURL: "https://iot-weather-f35d1-default-rtdb.firebaseio.com",
+        projectId: "iot-weather-f35d1",
+        storageBucket: "iot-weather-f35d1.appspot.com",
+        messagingSenderId: "581915043211",
+        appId: "1:581915043211:web:0ef0b32593561c677f3b8e",
+        measurementId: "G-FP2D1M48SG"
+    };
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    console.log(database)
+    // Code send to firebase ở đây
+    set(ref(database, 'coordinates'), {
+        longitude: longitude,
+        latitude: latitude
+    })
+}
+
+//test
+window.addEventListener('DOMContentLoaded', (event) => {
+    saveDataToFirebase(2, 4);
+});
 
