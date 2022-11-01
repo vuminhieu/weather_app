@@ -119,9 +119,9 @@ test1.addEventListener("click", () => {
     }).then((res) => res.json())
         .then((data) =>
         { console.log(data.features)
-            let long = data.features.longitude
-            let lat = data.features.latitude
-        saveDataToFirebase(6,7);
+            let long = data.features
+            let lat = data.features
+        saveDataToFirebase(long,lat);
         })
 })
 
@@ -132,9 +132,9 @@ test.addEventListener("keyup", (event) => {
             {
                 method: "GET",
             }).then((res) => res.json()).then((data) => { console.log(data.features)
-            let long = data.features.longitude
-            let lat = data.features.latitude
-            saveDataToFirebase(6,7);
+            let long = data.features
+            let lat = data.features
+            saveDataToFirebase(long,lat);
         })
     }
 
