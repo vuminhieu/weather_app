@@ -1,5 +1,4 @@
 /* Fetching Data from OpenWeatherMap API */
-
 let Add = "Hanoi"
 const accessKeyApiLocate = "pk.eyJ1IjoiYW5ocXQxIiwiYSI6ImNsOWI4c2F3ZjB5d2Mzdm8zaHE0OGs2ZDkifQ.EBWL6ETSXIZWwyr2E2wcyQ"
 const APILocate = `https://api.mapbox.com/geocoding/v5/mapbox.places/${Add}.json?access_token=${accessKeyApiLocate}`
@@ -140,7 +139,7 @@ test.addEventListener("keyup", (event) => {
 
 })
 
-
+// connect firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.13.0/firebase-app.js";
 import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/9.13.0/firebase-database.js";
 function saveDataToFirebase(longitude,latitude) {
