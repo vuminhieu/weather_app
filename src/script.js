@@ -163,6 +163,7 @@ function saveDataToFirebase(longitude,latitude) {
     })
 }
 
+
 //test
 window.addEventListener('DOMContentLoaded', (event) => {
     saveDataToFirebase(2, 4);
