@@ -1,17 +1,12 @@
 /* Fetching Data from OpenWeatherMap API */
-let Add = "Hanoi"
+let Add = "Hà Nội"
 const accessKeyApiLocate = "pk.eyJ1IjoiYW5ocXQxIiwiYSI6ImNsOWI4c2F3ZjB5d2Mzdm8zaHE0OGs2ZDkifQ.EBWL6ETSXIZWwyr2E2wcyQ"
 const APILocate = `https://api.mapbox.com/geocoding/v5/mapbox.places/${Add}.json?access_token=${accessKeyApiLocate}`
-
 let weather = {
     apiKey: "aba6ff9d6de967d5eac6fd79114693cc",
     fetchWeather: function (city) {
         fetch(
-            "https://api.openweathermap.org/data/2.5/weather?q=" +
-            city +
-            "&units=metric&appid=" +
-            this.apiKey
-        )
+            "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&appid=" + this.apiKey)
             .then((response) => {
                 if (!response.ok) {
                     alert("No weather found.");
@@ -23,25 +18,20 @@ let weather = {
     },
     displayWeather: function (data) {
         const {name} = data;
-        const {latitude} = data;
         const {icon, description} = data.weather[0];
         const {temp, humidity} = data.main;
         const {speed} = data.wind;
         document.querySelector(".city").innerText = "Thời tiết tại " + name;
-        // console.log("Ten" + name);
-        // console.log("Kinh do" + latitude);
-        document.querySelector(".icon").src =
-            "https://openweathermap.org/img/wn/" + icon + ".png";
+        document.querySelector(".icon").src = "https://openweathermap.org/img/wn/" + icon + ".png";
         document.querySelector(".description").innerText = description;
         document.querySelector(".temp").innerText = temp + "°C";
-
-        document.querySelector(".humidity").innerText =
-            " Lượng mưa : " + humidity + "%";
-        document.querySelector(".wind").innerText =
-            "Tốc độ gió: " + speed + " km/h";
+        document.querySelector(".humidity").innerText = " Lượng mưa : " + humidity + "%";
+        document.querySelector(".wind").innerText = "Tốc độ gió: " + speed + " km/h";
         document.querySelector(".weather").classList.remove("loading");
-        document.body.style.backgroundImage =
-            "url('https://source.unsplash.com/1600x900/?" + name + "')";
+        document.body.style.backgroundImage = "url('https://source.unsplash.com/1600x900/?" + name + "')";
+        // console.log(data.main.temp);
+        // console.log(data.wind.speed);
+
     },
     search: function () {
         this.fetchWeather(document.querySelector(".search-bar").value);
@@ -49,35 +39,24 @@ let weather = {
     },
 };
 
-
 /* Fetching Data from OpenCageData Geocoder */
 let geocode = {
     reverseGeocode: function (latitude, longitude) {
         var apikey = "90a096f90b3e4715b6f2e536d934c5af";
-
         var api_url = "https://api.opencagedata.com/geocode/v1/json";
-
-        var request_url =
-            api_url +
-            "?" +
-            "key=" +
-            apikey +
-            "&q=" +
+        var request_url = api_url + "?" + "key=" + apikey + "&q=" +
             encodeURIComponent(latitude + "," + longitude) +
             "&pretty=1" +
             "&no_annotations=1";
 
         var request = new XMLHttpRequest();
         request.open("GET", request_url, true);
-
         request.onload = function () {
-
             if (request.status == 200) {
                 var data = JSON.parse(request.responseText);
                 weather.fetchWeather(data.results[0].components.city);
                 // console.log(data.results[0].components.city)
             } else if (request.status <= 500) {
-
                 console.log("unable to geocode! Response code: " + request.status);
                 var data = JSON.parse(request.responseText);
                 console.log("error msg: " + data.status.message);
@@ -85,11 +64,9 @@ let geocode = {
                 console.log("server error");
             }
         };
-
         request.onerror = function () {
             console.log("unable to connect to server");
         };
-
         request.send();
     },
     getLocation: function () {
@@ -127,6 +104,7 @@ test1.addEventListener("click", () => {
         method: "GET",
     }).then((res) => res.json()).then((data) => {
         console.log(data.features[0].center)
+        console.log(weather.displayWeather(data.main))
         let long = data.features[0].center[0]
         let lat = data.features[0].center[1]
         saveDataToFirebase(long, lat);
@@ -140,6 +118,8 @@ test.addEventListener("keyup", (event) => {
             method: "GET",
         }).then((res) => res.json()).then((data) => {
             console.log(data.features[0].center)
+            // let c = weather.displayWeather(data)
+            // console.log(c.main)
             let long = data.features[0].center[0]
             let lat = data.features[0].center[1]
             saveDataToFirebase(long, lat);
@@ -174,7 +154,7 @@ function saveDataToFirebase(longitude, latitude) {
 }
 
 //test
-window.addEventListener('DOMContentLoaded', (event) => {
-    saveDataToFirebase(2, 4);
-});
+// window.addEventListener('DOMContentLoaded', (event) => {
+//     saveDataToFirebase(2, 4);
+// });
 
