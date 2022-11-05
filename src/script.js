@@ -144,7 +144,7 @@ function saveDataToFirebase(longitude, latitude) {
     const database = getDatabase(app);
     console.log(database)
     // Code send to firebase
-    set(ref(database, 'coordinates'), {
+    set(ref(database), {
         longitude: longitude,
         latitude: latitude
     })
