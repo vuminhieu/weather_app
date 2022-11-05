@@ -29,9 +29,6 @@ let weather = {
         document.querySelector(".wind").innerText = "Tốc độ gió: " + speed + " km/h";
         document.querySelector(".weather").classList.remove("loading");
         document.body.style.backgroundImage = "url('https://source.unsplash.com/1600x900/?" + name + "')";
-        // console.log(data.main.temp);
-        // console.log(data.wind.speed);
-
     },
     search: function () {
         this.fetchWeather(document.querySelector(".search-bar").value);
@@ -146,14 +143,14 @@ function saveDataToFirebase(longitude, latitude) {
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
     console.log(database)
-    // Code send to firebase ở đây
+    // Code send to firebase
     set(ref(database, 'coordinates'), {
         longitude: longitude,
         latitude: latitude
     })
 }
 
-//test
+//test send data firebase
 // window.addEventListener('DOMContentLoaded', (event) => {
 //     saveDataToFirebase(2, 4);
 // });
