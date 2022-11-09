@@ -119,7 +119,7 @@ test.addEventListener("keyup", (event) => {
             // console.log(c.main)
             let long = data.features[0].center[0]
             let lat = data.features[0].center[1]
-            saveDataToFirebase(long, lat);
+            saveDataToFirebase(lat,long);
         })
     }
 
@@ -129,7 +129,7 @@ test.addEventListener("keyup", (event) => {
 import {initializeApp} from "https://www.gstatic.com/firebasejs/9.13.0/firebase-app.js";
 import {getDatabase, set, ref, update} from "https://www.gstatic.com/firebasejs/9.13.0/firebase-database.js";
 
-function saveDataToFirebase(longitude, latitude) {
+function saveDataToFirebase(latitude,longitude) {
     const firebaseConfig = {
         apiKey: "AIzaSyCsJBR0Mm23RUBqmdjEhvY8huGOU0egqAs",
         authDomain: "iot-weather-f35d1.firebaseapp.com",
