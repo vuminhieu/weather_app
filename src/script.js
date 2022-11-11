@@ -151,7 +151,7 @@ function saveDataToFirebase(latitude,longitude) {
 }
 
 // test send data firebase
-window.addEventListener('DOMContentLoaded', (event) => {
-    saveDataToFirebase(21.0294498, 105.8544441);
-});
+// window.addEventListener('DOMContentLoaded', (event) => {
+//     saveDataToFirebase(21.0294498, 105.8544441);
+// });
 
